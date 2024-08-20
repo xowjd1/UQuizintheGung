@@ -25,9 +25,7 @@ public struct Leaderboard
 
 public struct LeaderboardList
 {
-    public string clearTime;
-    public string nickName;
-    public string score;
+    public List<Leaderboard> data;
 }
 
 [Serializable]

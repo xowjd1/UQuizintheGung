@@ -25,8 +25,14 @@ public class HttpTest : MonoBehaviour
                 print(downloadHandler.text);
                 string jsonData = "{ \"data\" : " + downloadHandler.text + "}";
                 print(jsonData);
-               
+                LeaderboardList items = JsonUtility.FromJson<LeaderboardList>(jsonData);
 
+                foreach (var item in items.data)
+                {
+                    Debug.Log(item.nickName);
+                    Debug.Log(item.score);
+                    Debug.Log(item.clearTime);
+                }
 
 
             };
