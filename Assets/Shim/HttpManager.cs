@@ -16,6 +16,46 @@ public struct PostInfo
 }
 
 [Serializable]
+public struct Leaderboard
+{
+    public string clearTime;
+    public string nickName;
+    public string score;
+}
+
+public struct LeaderboardList
+{
+    public string clearTime;
+    public string nickName;
+    public string score;
+}
+
+[Serializable]
+public struct Choises
+{
+    public string choiseOne;
+    public string choiseTwo;
+    public string choiseThree;
+    public string choiseFour;
+}
+
+[Serializable]
+public struct Quiz
+{
+    public string quiz;
+    public Choises choises;
+    public int answerNum;
+    public string description;
+}
+
+[Serializable]
+public struct QuizArray
+{
+    public List<Quiz> data;
+
+}
+
+[Serializable]
 public struct PostInfoArray
 {
     public List<PostInfo> data;

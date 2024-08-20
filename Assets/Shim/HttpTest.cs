@@ -8,21 +8,73 @@ using UnityEngine.UI;
 
 public class HttpTest : MonoBehaviour
 {
-    public PostInfoArray allPostInfo;
+    public QuizUIController controller;
 
+
+    public QuizArray allQuiz;
+    public Quiz quiz;
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            HttpInfo info = new HttpInfo();
+            //
+            info.url = "http://192.168.1.44:8080/test/leaderboard"; //"https://jsonplaceholder.typicode.com/posts";
+            info.OnComplete = downloadHandler => {
+                print(downloadHandler.text);
+                string jsonData = "{ \"data\" : " + downloadHandler.text + "}";
+                print(jsonData);
+               
+
+
+
+            };
+            StartCoroutine(HttpManager.GetInstance().Get(info));
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             HttpInfo info = new HttpInfo();
             //
-            info.url = "http://192.168.1.44:8001/menu/category"; //"https://jsonplaceholder.typicode.com/posts";
+            info.url = "http://192.168.1.44:8080/test/test"; //"https://jsonplaceholder.typicode.com/posts";
             info.OnComplete = downloadHandler => {
                 print(downloadHandler.text);
-                //string jsonData = "{ \"data\" : " + downloadHandler.text + "}";
-                //print(jsonData);
-                //allPostInfo = JsonUtility.FromJson<PostInfoArray>(jsonData);
+                string jsonData = "{ \"data\" : " + downloadHandler.text + "}";
+                print(jsonData);
+                allQuiz = JsonUtility.FromJson<QuizArray>(jsonData);
+
+                print(allQuiz.data.Count);
+
+                foreach (var item in allQuiz.data)
+                {
+                    print("quiztitle" + item.quiz);
+
+                    print("=============================");
+
+                    print(item.choises.choiseOne);
+                    print(item.choises.choiseTwo);
+                    print(item.choises.choiseThree);
+                    print(item.choises.choiseFour);
+
+                    print("=============================");
+
+                    print(item.answerNum);
+                    print(item.description);
+
+
+                }
+
+                QuizUIText quizText = new QuizUIText();
+                quizText.titleText = allQuiz.data[0].quiz;
+                quizText.choiseOneText = allQuiz.data[0].choises.choiseOne;
+                quizText.choiseTwoText = allQuiz.data[0].choises.choiseTwo;
+                quizText.choiseThreeText = allQuiz.data[0].choises.choiseThree;
+                quizText.choiseFourText = allQuiz.data[0].choises.choiseFour;
+                quizText.answerNum = allQuiz.data[0].answerNum;
+                controller.SetQuizData(quizText);
+
             };
             StartCoroutine(HttpManager.GetInstance().Get(info));
         }
