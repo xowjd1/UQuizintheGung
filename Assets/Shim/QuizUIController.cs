@@ -31,9 +31,15 @@ public class QuizUIController : MonoBehaviour
     public TextMeshProUGUI choiseFourText;
     public int answerNum;
 
+
+    public GameObject successFailurePanel;
+    public TextMeshProUGUI successFailureText;
+    public float successFailurePanelTimer = 2f;
+
+
     //public GameObject popup
 
-
+    // TODO 스테이지 넘버로 문제 가져오기
     public void SetQuizData(QuizUIText quizUIText)
     {
         //stageText.text = quizUIText.stageText.ToString();
@@ -62,8 +68,21 @@ public class QuizUIController : MonoBehaviour
         }
     }
 
+
+
     private void PopUpAnswer(int answer)
     {
-        
+        if(answer == 1)
+            StartCoroutine(PopUpAnswerPlay("정답입니다!!"));
+        else
+            StartCoroutine(PopUpAnswerPlay("틀렸습니다!!"));
+    }
+
+    private IEnumerator PopUpAnswerPlay(string text)
+    {
+        successFailurePanel.gameObject.SetActive(true);
+        successFailureText.text = text.ToString(); 
+        yield return new WaitForSeconds(successFailurePanelTimer);
+        successFailurePanel.gameObject.SetActive(false);
     }
 }
