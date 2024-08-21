@@ -4,22 +4,52 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.Networking;
 using System.Text;
+using System;
+using System.Globalization;
+//using System.IO;
+//using Newtonsoft.Json;
+//using Newtonsoft.Json.Linq;
 
 public class GetLeaderboard : MonoBehaviour
 {
     public TMP_Text[] names;
     public TMP_Text[] scores;
+    public JsonList myData;
 
     string url = "http://192.168.1.44:8080/test/leaderboard";
 
     void Start()
     {
         GetServerData(url);
+
+        //TestJson();
     }
 
     void Update()
     {
         
+    }
+
+    void TestJson()
+    {
+        //string path = Application.dataPath + "/test.json";
+        //string json =  File.ReadAllText(path);
+        //print(json);
+
+        // NewtonSoft Parse 방식
+        //JArray jsonArr = JArray.Parse(json);
+        //foreach(JObject item  in jsonArr)
+        //{
+        //    print(item.GetValue("clearTime"));
+        //    print(item.GetValue("score"));
+        //    print(item.GetValue("nickName"));
+        //}
+        //newTestList = JsonUtility.FromJson<JsonList>(myJson);
+
+        // Json 배열에 키를 강제로 추가하는 방식
+        //string myJson = "{\"serverDataList\": " + json + "}";
+        //newTestList = JsonUtility.FromJson<JsonData>(json);
+
     }
 
     public void GetServerData(string url)
@@ -32,18 +62,58 @@ public class GetLeaderboard : MonoBehaviour
 
         #region 선생님
         //UnityWebRequest request = new UnityWebRequest(url, "GET");
+        //request.downloadHandler = new DownloadHandlerBuffer();
 
         //yield return request.SendWebRequest();
 
-        //string jsonData = request.downloadHandler.text;
-        //JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
-
-        //for (int i = 0; i < myData.serverDataList.Count; i++)
+        //if (request.result == UnityWebRequest.Result.Success)
         //{
-        //    names[i].text = myData.serverDataList[i].nickName;
-        //    scores[i].text = myData.serverDataList[i].score.ToString();
+        //    string jsonData = request.downloadHandler.text;
+
+        //    string myJson = "{\"serverDataList\": " + jsonData + "}";
+        //    myData = JsonUtility.FromJson<JsonList>(myJson);
+
+            
+        //    for (int i = 0; i < names.Length; i++)
+        //    {
+        //        names[i].text = myData.serverDataList[i].nickName;
+        //        scores[i].text = myData.serverDataList[i].score.ToString();
+        //    }
+        //}
+        //else
+        //{
+        //    print(request.error);
         //}
         #endregion
+
+
+        UnityWebRequest request = new UnityWebRequest(url, "GET");
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return request.SendWebRequest();
+
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            string jsonData = request.downloadHandler.text;
+
+            string myJson = "{\"serverDataList\": " + jsonData + "}";
+            myData = JsonUtility.FromJson<JsonList>(myJson);
+
+
+            
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                names[i].text = myData.serverDataList[i].nickName;
+                scores[i].text = myData.serverDataList[i].score.ToString();
+            }
+        }
+        else
+        {
+            print(request.error);
+        }
+
+
 
         #region 
         //using (UnityWebRequest request = UnityWebRequest.Get(url))
@@ -70,18 +140,18 @@ public class GetLeaderboard : MonoBehaviour
         #endregion
 
 
-        UnityWebRequest request = new UnityWebRequest(url, "GET");
+        //UnityWebRequest request = new UnityWebRequest(url, "GET");
 
-        yield return request.SendWebRequest();
+        //yield return request.SendWebRequest();
 
-        string jsonData = request.downloadHandler.text;
-        JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
+        //string jsonData = request.downloadHandler.text;
+        //JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
 
-        for(int i = 0; i < myData.serverDataList.Count; i++)
-        {
-            names[i].text = myData.serverDataList[i].nickName;
-            scores[i].text = myData.serverDataList[i].score.ToString();
-        }
+        //for(int i = 0; i < myData.serverDataList.Count; i++)
+        //{
+        //    names[i].text = myData.serverDataList[i].nickName;
+        //    scores[i].text = myData.serverDataList[i].score.ToString();
+        //}
 
     }
 }
@@ -90,12 +160,12 @@ public class GetLeaderboard : MonoBehaviour
 public struct JsonData
 {
     public string clearTime;
-    public string nickName;
     public int score;
+    public string nickName;
 }
 
 [System.Serializable]
-public struct JsonList
+public class JsonList
 {
     public List<JsonData> serverDataList;
 }
