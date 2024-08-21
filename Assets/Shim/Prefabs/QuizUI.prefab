@@ -736,7 +736,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1116617488175939376}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acc6b14bcc1e2524f944ca9ab21a5f72, type: 3}
   m_Name: 
@@ -747,6 +747,7 @@ MonoBehaviour:
   maxNextLevel: 2
   stageText: {fileID: 3774755319472451474}
   titleText: {fileID: 4853368661891175202}
+  numberText: {fileID: 5247275718417254959}
   choiseOneText: {fileID: 656005141734567136}
   choiseTwoText: {fileID: 5785115084016305760}
   choiseThreeText: {fileID: 824448202059361346}
@@ -756,6 +757,7 @@ MonoBehaviour:
   successFailurePanel: {fileID: 503712290292371442}
   successFailureText: {fileID: 5298140385417442023}
   successFailurePanelTimer: 2
+  panel: {fileID: 1116617488175939376}
 --- !u!1 &1266504614738469972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1243,6 +1245,7 @@ GameObject:
   - component: {fileID: 7607601311929269645}
   - component: {fileID: 813390164662221039}
   - component: {fileID: 6922983051068719997}
+  - component: {fileID: 7744065291590177731}
   m_Layer: 5
   m_Name: QuizUI
   m_TagString: Untagged
@@ -1336,6 +1339,35 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7744065291590177731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287803941418480458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acc6b14bcc1e2524f944ca9ab21a5f72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bar: {fileID: 8089976217357830798}
+  timeCounter: 0
+  timer: 3
+  maxNextLevel: 2
+  stageText: {fileID: 3774755319472451474}
+  titleText: {fileID: 4853368661891175202}
+  numberText: {fileID: 5247275718417254959}
+  choiseOneText: {fileID: 656005141734567136}
+  choiseTwoText: {fileID: 5785115084016305760}
+  choiseThreeText: {fileID: 824448202059361346}
+  choiseFourText: {fileID: 147295617532235972}
+  answerNum: 0
+  descriptionText: {fileID: 442229565831239993}
+  successFailurePanel: {fileID: 503712290292371442}
+  successFailureText: {fileID: 5298140385417442023}
+  successFailurePanelTimer: 2
+  panel: {fileID: 1116617488175939376}
 --- !u!1 &7082532746865536075
 GameObject:
   m_ObjectHideFlags: 0

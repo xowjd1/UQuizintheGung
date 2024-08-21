@@ -29,6 +29,8 @@ public class QuizUIController : MonoBehaviour
     public float timeCounter;
     public float timer = 2f;
 
+
+
     [Header("���� ����")]
     public int maxNextLevel = 2;
 
@@ -37,6 +39,7 @@ public class QuizUIController : MonoBehaviour
 
     [Header("���� ����")]
     public TextMeshProUGUI titleText;
+    public TextMeshProUGUI numberText;
 
     [Header("���� UI ��������")]
     public TextMeshProUGUI choiseOneText;
@@ -59,6 +62,7 @@ public class QuizUIController : MonoBehaviour
     [Header("���� UI �����˾� ���ð�")]
     public float successFailurePanelTimer = 1f;
 
+    public GameObject panel;
 
 
     private void Update()
@@ -72,13 +76,6 @@ public class QuizUIController : MonoBehaviour
             GameManager.Instance.level++;
             PopUpAnswer(0);
         }
-
-
-
-        // if (Input.GetKeyDown(KeyCode.L))
-        // {
-        //     QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
-        // }
     }
     
     public void GetQuiz()
@@ -88,7 +85,12 @@ public class QuizUIController : MonoBehaviour
 
     private static int GetCurrentQuizIndex()
     {
-        return GameManager.Instance.stage + GameManager.Instance.level - 2;
+        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.stage + GameManager.Instance.level - 2));
+        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.stage ));
+        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.level));
+
+        //return GameManager.Instance.stage + GameManager.Instance.level - 2;
+        return 8 - GameManager.Instance.maxCounter;
     }
 
 
@@ -122,6 +124,7 @@ public class QuizUIController : MonoBehaviour
         {
             //Debug.Log("틀렸습니다!!");
             PopUpAnswer(0);
+
         }
     }
 
@@ -139,27 +142,48 @@ public class QuizUIController : MonoBehaviour
         successFailureText.text = text.ToString(); 
         yield return new WaitForSeconds(successFailurePanelTimer);
 
+      
 
+
+        if (GameManager.Instance.maxCounter == 3)
+        {
+            GameManager.Instance.open = true;
+        }
 
         if (answer == 1)
         {
             
             if (GameManager.Instance.level == maxNextLevel)
             {
+                
+
                 GameManager.Instance.levelCounter = true;
                 GameManager.Instance.level = 1;
                 
                 GameManager.Instance.answerCounter++;
                 GameManager.Instance.maxCounter--;
+                numberText.text = GameManager.Instance.maxCounter.ToString();
+
+                if (GameManager.Instance.maxCounter == 0)
+                {
+                    panel.gameObject.SetActive(false);
+                    bar.gameObject.SetActive(false);
+                    successFailurePanel.gameObject.SetActive(false);
+                }
+
+                
 
                 yield return new WaitForSeconds(successFailurePanelTimer);
                 successFailurePanel.gameObject.SetActive(false);
                 StartCoroutine(StageMove());
+                bar.value = 1;
+
                 yield return null;
             }
 
             if (GameManager.Instance.level - 1 < maxNextLevel)
-            { 
+            {
+
                 successFailureText.text = "다음 레벨로 이동";
                 yield return new WaitForSeconds(successFailurePanelTimer);
                 successFailurePanel.gameObject.SetActive(false);
@@ -168,8 +192,9 @@ public class QuizUIController : MonoBehaviour
 
                 GameManager.Instance.answerCounter++;
                 GameManager.Instance.maxCounter--;
-
+                numberText.text = GameManager.Instance.maxCounter.ToString();
                 QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
+                bar.value = 1;
                 yield return null;
             }
 
@@ -186,14 +211,24 @@ public class QuizUIController : MonoBehaviour
                 GameManager.Instance.answerCounter++;
                 GameManager.Instance.maxCounter--;
 
+                if (GameManager.Instance.maxCounter == 0)
+                {
+                    panel.gameObject.SetActive(false);
+                    bar.gameObject.SetActive(false);
+                    successFailurePanel.gameObject.SetActive(false);
+                }
+
+                numberText.text = GameManager.Instance.maxCounter.ToString();
                 yield return new WaitForSeconds(successFailurePanelTimer);
                 successFailurePanel.gameObject.SetActive(false);
                 StartCoroutine(StageMove());
+                bar.value = 1;
                 yield return null;
             }
 
             if (GameManager.Instance.level - 1 < maxNextLevel)
             {
+
                 successFailureText.text = "다음 문제로 이동";
                 yield return new WaitForSeconds(successFailurePanelTimer);
                 successFailurePanel.gameObject.SetActive(false);
@@ -201,49 +236,14 @@ public class QuizUIController : MonoBehaviour
                 GameManager.Instance.level++;
                 GameManager.Instance.answerCounter++;
                 GameManager.Instance.maxCounter--;
-
+                numberText.text = GameManager.Instance.maxCounter.ToString();
                 QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
+                bar.value = 1;
                 yield return null;
             }
 
 
         }
-    }
-
-    private void NextLevel()
-    {
-        Debug.Log(GameManager.Instance.level);
-        Debug.Log("스테이지 : " + GameManager.Instance.stage + ", 정답 :" + GameManager.Instance.level);
-
-        if (GameManager.Instance.level < maxNextLevel)
-        {
-            GameManager.Instance.level++;
-            QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
-        }
-
-        /*
-       if (GameManager.Instance.level == 3)
-       {
-           GameManager.Instance.open = true;
-       }
-
-
-
-       if (GameManager.Instance.level == maxNextLevel)
-       {
-           GameManager.Instance.stage++;
-           StartCoroutine(StageMove());
-       }
-
-
-       else
-       {
-           //if()
-
-           Debug.Log("다음 스테이지로 이동");
-           QuizPositionController.Instance.QuitQuiz();
-       }
-       */
     }
 
     private IEnumerator StageMove()
