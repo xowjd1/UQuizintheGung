@@ -25,7 +25,7 @@ public class GetLeaderboard : MonoBehaviour
 
     void Start()
     {
-        GetServerData(url);
+        // GetServerData(url);
 
         //TestJson();
     }
@@ -41,7 +41,7 @@ public class GetLeaderboard : MonoBehaviour
         //string json =  File.ReadAllText(path);
         //print(json);
 
-        // NewtonSoft Parse ¹æ½Ä
+        // NewtonSoft Parse ï¿½ï¿½ï¿½
         //JArray jsonArr = JArray.Parse(json);
         //foreach(JObject item  in jsonArr)
         //{
@@ -51,13 +51,13 @@ public class GetLeaderboard : MonoBehaviour
         //}
         //newTestList = JsonUtility.FromJson<JsonList>(myJson);
 
-        // Json ¹è¿­¿¡ Å°¸¦ °­Á¦·Î Ãß°¡ÇÏ´Â ¹æ½Ä
+        // Json ï¿½è¿­ï¿½ï¿½ Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½
         //string myJson = "{\"serverDataList\": " + json + "}";
         //newTestList = JsonUtility.FromJson<JsonData>(json);
 
     }
 
-    public void GetServerData(string url)
+    public void GetServerData()
     {
         StartCoroutine(GetServerDataProcess(url));
     }
@@ -65,7 +65,7 @@ public class GetLeaderboard : MonoBehaviour
     IEnumerator GetServerDataProcess(string url)
     {
 
-        #region ¼±»ý´Ô
+        #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         //UnityWebRequest request = new UnityWebRequest(url, "GET");
         //request.downloadHandler = new DownloadHandlerBuffer();
 

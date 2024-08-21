@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using Sequence = DG.Tweening.Sequence;
 
 public class QuizUIText
 { 
@@ -68,6 +69,8 @@ public class QuizUIController : MonoBehaviour
     public float successFailurePanelTimer = 1f;
 
     public GameObject panel;
+
+    public GetLeaderboard leaderboard;
 
 
     private void Update()
@@ -247,8 +250,19 @@ public class QuizUIController : MonoBehaviour
         bar.gameObject.SetActive(false);
         successFailurePanel.gameObject.SetActive(false);
 
-        //-2.638, 5.815, 48.884
-        GameManager.Instance.player.transform.DOMove(vector, 1f,false);
+        //todo 위치 이동
+        // -3.5, 4.55, 64.29
+        Vector3 targetPosition = new Vector3(-2.71f, 4.55f, 70.75f);
+
+        // float distance = Vector3.Distance(GameManager.Instance.player.transform.position, targetPosition);
+        
+        Sequence sequence = DOTween.Sequence().SetAutoKill(false).Pause()
+            .Append(GameManager.Instance.player.transform.DOMove(targetPosition, 1f, false))
+            .Append(GameManager.Instance.player.transform.DORotate(new Vector3(0, -180, 0), 3));
+            
+        
+        //todo 리더보드 호출 
+        // leaderboard.GetServerData();
 
     }
 

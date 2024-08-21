@@ -20,7 +20,7 @@ public class QuizPos : MonoBehaviour
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
     }
 
 }

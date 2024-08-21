@@ -5,7 +5,7 @@ using UnityEngine;
 public class QuizData : Singleton<QuizData>
 {
     public QuizUIController quizUI;
-    public string quizDataUrl = "http://192.168.1.44:8080/test/test";
+    public string quizDataUrl = "http://192.168.1.44:8080/api/quizlist";
 
     public void GetQuizData(int level)
     {
