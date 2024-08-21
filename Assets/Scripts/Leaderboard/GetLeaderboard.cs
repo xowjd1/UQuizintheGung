@@ -29,7 +29,47 @@ public class GetLeaderboard : MonoBehaviour
 
     IEnumerator GetServerDataProcess(string url)
     {
-        /*
+
+        #region ¼±»ý´Ô
+        //UnityWebRequest request = new UnityWebRequest(url, "GET");
+
+        //yield return request.SendWebRequest();
+
+        //string jsonData = request.downloadHandler.text;
+        //JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
+
+        //for (int i = 0; i < myData.serverDataList.Count; i++)
+        //{
+        //    names[i].text = myData.serverDataList[i].nickName;
+        //    scores[i].text = myData.serverDataList[i].score.ToString();
+        //}
+        #endregion
+
+        #region 
+        //using (UnityWebRequest request = UnityWebRequest.Get(url))
+        //{
+        //    yield return request.SendWebRequest();
+
+        //    //string jsonData = request.downloadHandler.text;
+
+        //    //print(jsonData);
+
+        //    string jsonData = "{ \"serverDataList\" : " + request.downloadHandler.text + "}";
+        //    print(jsonData);
+        //    JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
+
+
+        //    print(myData.serverDataList.Count);
+
+
+        //    foreach (var item in myData.serverDataList)
+        //    {
+        //        Debug.Log(item);
+        //    }
+        //}
+        #endregion
+
+
         UnityWebRequest request = new UnityWebRequest(url, "GET");
 
         yield return request.SendWebRequest();
@@ -42,34 +82,11 @@ public class GetLeaderboard : MonoBehaviour
             names[i].text = myData.serverDataList[i].nickName;
             scores[i].text = myData.serverDataList[i].score.ToString();
         }
-        */
-
-        using (UnityWebRequest request = UnityWebRequest.Get(url))
-        { 
-            yield return request.SendWebRequest();
-
-            //string jsonData = request.downloadHandler.text;
-
-            //print(jsonData);
-
-            string jsonData = "{ \"serverDataList\" : " + request.downloadHandler.text + "}";
-            print(jsonData);
-            JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
-
-        
-            print(myData.serverDataList.Count);
-
-
-            foreach (var item in myData.serverDataList)
-            {
-                Debug.Log(item);
-            }
-        }
-
 
     }
 }
 
+[System.Serializable]
 public struct JsonData
 {
     public string clearTime;
@@ -77,6 +94,7 @@ public struct JsonData
     public int score;
 }
 
+[System.Serializable]
 public struct JsonList
 {
     public List<JsonData> serverDataList;
