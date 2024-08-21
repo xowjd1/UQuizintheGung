@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using System.Text;
 using System;
 using System.Globalization;
+using System.Linq;
 //using System.IO;
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Linq;
@@ -73,7 +74,7 @@ public class GetLeaderboard : MonoBehaviour
         //    string myJson = "{\"serverDataList\": " + jsonData + "}";
         //    myData = JsonUtility.FromJson<JsonList>(myJson);
 
-            
+
         //    for (int i = 0; i < names.Length; i++)
         //    {
         //        names[i].text = myData.serverDataList[i].nickName;
@@ -99,14 +100,30 @@ public class GetLeaderboard : MonoBehaviour
             string myJson = "{\"serverDataList\": " + jsonData + "}";
             myData = JsonUtility.FromJson<JsonList>(myJson);
 
+            JsonData[] jsonDataArray = myData.serverDataList.ToArray();
 
-            
+            for(int i = 0; i < jsonDataArray.Length-1; i++)
+            {
+                for(int j = i; j < jsonDataArray.Length; j++)
+                {
+                    if (myData.serverDataList[i].score < myData.serverDataList[j].score)
+                    {
+                        JsonData temp;
+                        temp = jsonDataArray[i];
+                        jsonDataArray[i] = jsonDataArray[j];
+                        jsonDataArray[j] = temp;
+                    }
+                }
+            }
+            myData.serverDataList = jsonDataArray.ToList();
 
             for (int i = 0; i < names.Length; i++)
             {
                 names[i].text = myData.serverDataList[i].nickName;
                 scores[i].text = myData.serverDataList[i].score.ToString();
+
             }
+
         }
         else
         {
@@ -154,6 +171,29 @@ public class GetLeaderboard : MonoBehaviour
         //}
 
     }
+
+    void BubbleSort(int[] nums)
+    {
+        int temp;
+        for(int i = 0; i < nums.Length; i++)
+        {
+            for(int j = i; j < nums.Length; j++)
+            {
+                if (nums[i] < nums[j])
+                {
+                    temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
+            }
+        }
+
+        for(int i = 0; i < nums.Length; i++)
+        {
+            print(nums[i]);
+        }
+    }
+
 }
 
 [System.Serializable]
