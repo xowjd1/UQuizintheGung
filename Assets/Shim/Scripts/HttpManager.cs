@@ -102,36 +102,43 @@ public class HttpManager : Singleton<HttpManager>
     }
     */
 
-    #region ÅØ½ºÆ® ¿äÃ»
+    #region ï¿½Ø½ï¿½Æ® ï¿½ï¿½Ã»
 
     public IEnumerator Get(HttpInfo info)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Get(info.url))
-        {
-            yield return webRequest.SendWebRequest();
-
-            DoneRequest(webRequest, info);
-        }
+        using var webRequest = UnityWebRequest.Get(info.url);
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        yield return webRequest.SendWebRequest();
+        
+        DoneRequest(webRequest, info);
     }
 
+    
+    private IEnumerator SendTest(string url)
+    {
+        using var webRequest = UnityWebRequest.Get(url);
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        yield return webRequest.SendWebRequest();
+        Debug.Log(webRequest.downloadHandler.text);
+    }
+    
     public IEnumerator Post(HttpInfo info)
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(info.url, info.body, info.contextType))
+        using (UnityWebRequest webRequest = UnityWebRequest.PostWwwForm(info.url, info.body))
         {
             yield return webRequest.SendWebRequest();
-
             DoneRequest(webRequest, info);
         }
     }
 
     #endregion
 
-    #region ÆÄÀÏ ¿äÃ» 
+    #region ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» 
 
     public IEnumerator UploadFileByFormData(HttpInfo info)
     {
-        // ÆÄÀÏÀÇ À§Ä¡ 
-        // ÆÄÀÏÀ» byte ¹è¿­·Î ÀÐ¾î ¿ÀÀÚ.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ byte ï¿½è¿­ï¿½ï¿½ ï¿½Ð¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
         byte[] data = File.ReadAllBytes(info.body);
 
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
@@ -148,17 +155,17 @@ public class HttpManager : Singleton<HttpManager>
 
     public IEnumerator UploadFileByByte(HttpInfo info)
     {
-        // ÆÄÀÏÀÇ À§Ä¡ 
-        // ÆÄÀÏÀ» byte ¹è¿­·Î ÀÐ¾î ¿ÀÀÚ.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ byte ï¿½è¿­ï¿½ï¿½ ï¿½Ð¾ï¿½ ï¿½ï¿½ï¿½ï¿½.
         byte[] data = File.ReadAllBytes(info.body);
 
         using (UnityWebRequest webRequest = new UnityWebRequest(info.url, "POST"))
         {
-            // ¾÷·Îµå ÇÏ´Â µ¥ÀÌÅÍ
+            // ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             webRequest.uploadHandler = new UploadHandlerRaw(data);
             webRequest.uploadHandler.contentType = info.contextType;
 
-            //ÀÀ´ä ¹Þ´Â µ¥ÀÌÅÍ °ø°£
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½Þ´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             webRequest.downloadHandler = new DownloadHandlerBuffer();
 
             yield return webRequest.SendWebRequest();
@@ -194,6 +201,8 @@ public class HttpManager : Singleton<HttpManager>
 
     public void DoneRequest(UnityWebRequest webRequest, HttpInfo info)
     {
+        Debug.Log(webRequest.downloadHandler.text);
+        
         if (webRequest.result == UnityWebRequest.Result.Success)
         {
 
@@ -202,11 +211,11 @@ public class HttpManager : Singleton<HttpManager>
                 info.OnComplete(webRequest.downloadHandler);
             }
 
-            Debug.Log("¿äÃ» ¼º°ø");
+            Debug.Log("ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½");
         }
         else
         {
-            Debug.LogError("¿¡·¯ : " + webRequest.error);
+            Debug.LogError("ï¿½ï¿½ï¿½ï¿½ : " + webRequest.error);
         }
     }
 
