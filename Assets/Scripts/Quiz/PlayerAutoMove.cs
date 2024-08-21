@@ -30,20 +30,20 @@ public class PlayerAutoMove : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) 
         {
-            Debug.Log("마우스 좌클릭 ");
+            //Debug.Log("마우스 좌클릭 ");
             
             Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
             RaycastHit hit;
 
 
-            Debug.Log("Raycast hit : " + ray);
+            //Debug.Log("Raycast hit : " + ray);
 
 
             // QuizPosition hit
-            if (Physics.Raycast(ray, out hit, 1000000000000000000000000f, _layerMask))
+            if (Physics.Raycast(ray, out hit, 1000f, _layerMask))
             {
               
-                Debug.Log("Raycast hit : " + hit.transform.name);
+                //Debug.Log("Raycast hit : " + hit.transform.name);
                 StartMoving();  
             }
         }

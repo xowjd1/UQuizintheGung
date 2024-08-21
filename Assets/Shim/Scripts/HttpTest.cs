@@ -107,11 +107,13 @@ public class HttpTest : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             HttpInfo info = new HttpInfo();
+
+
             UserInfo userInfo = new UserInfo();
             userInfo.name = "메타버스";
             userInfo.age = 3;
             userInfo.height = 185f;
-            info.url = "http://mtvs.helloworldlabs.kr:7771/api/json";
+            info.url = "http://mtvs.helloworldlabs.kr:7771/api/json/";
             info.body = JsonUtility.ToJson(userInfo);
             info.contextType = "application/json";
 
