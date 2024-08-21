@@ -21,6 +21,7 @@ public class GetLeaderboard : MonoBehaviour
     //string url = "http://192.168.1.44:8080/test/leaderboard";
     string url = "http://192.168.1.44:8080/api/leaderboard?nickname=fewaf&score=241";
     //string url = "http://192.168.1.44:8080/api/dbcheck";
+    //string url = "http://192.168.1.44:8080/api/newleaderboard";
 
     void Start()
     {
