@@ -15,32 +15,14 @@ public class PlayerAutoMove : MonoBehaviour
         transform.position = new Vector3(-25f, 1f, 0f);
         _layerMask = LayerMask.GetMask("portal");
 
-        // TODO 다음 포지션 활성화 테스트 
+        // TODO 다음 포지션 활성화 (TEST)
         QuizPositionController.Instance.ActiveNextPosition();
     }
 
     void Update()
     {
-        MovePlayer();
         GetMouseButtonDown();
-    }
-    
-    void MovePlayer()
-    {
-        if (_shouldMove)
-        {
-            Vector3 targetPosition = QuizPositionController.Instance.GetNextPosition();
-            
-            transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
-
-            // 목표 위치에 거의 도달했는지 확인
-            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
-            {
-                _shouldMove = false; // 목표 위치에 도달하면 이동 중지
-                audioSource.Stop();
-                QuizPositionController.Instance.SetNextPosition();
-            }
-        }
+        MovePlayer();
     }
     
     // 다음 포지션 클릭 시 포지현으로 자동 이동
@@ -57,16 +39,33 @@ public class PlayerAutoMove : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100f, _layerMask))
             {
                 Debug.Log("Raycast hit : " + hit.transform.name);
-                StartMoving();
+                StartMoving();  
+            }
+        }
+    }
+    
+    void MovePlayer()
+    {
+        // 플레이어 이동 
+        if (_shouldMove)
+        {
+            Vector3 targetPosition = QuizPositionController.Instance.GetNextPosition();
+            
+            transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
+
+            // 목표 위치에 거의 도달했는지 확인
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+            {
+                _shouldMove = false; // 목표 위치에 도달하면 이동 중지
+                audioSource.Stop();
+                QuizPositionController.Instance.SetNextPosition();
             }
         }
     }
 
-    // 이동을 시작하는 함수
-    public void StartMoving()
+    void StartMoving()
     {
         _shouldMove = true;
-        
         // float journeyLength = Vector3.Distance(transform.position, positionList[_nextIndex].position);
         // // 오디오 클립 길이 
         // float clipLength = audioSource.clip.length;

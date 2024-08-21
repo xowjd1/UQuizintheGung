@@ -7,7 +7,10 @@ public class QuizPos : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            QuizPositionController.Instance.DeActivePosition();            
+            QuizPositionController.Instance.DeActivePosition();  
+            // TODO QuizUI 활성화
+            
+            
         }
     }
 }
