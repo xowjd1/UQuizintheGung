@@ -17,6 +17,9 @@ public class QuizData : Singleton<QuizData>
 
             string jsonData = "{ \"data\" : " + downloadHandler.text + "}";
             quizArray = JsonUtility.FromJson<QuizArray>(jsonData);
+
+            Debug.Log(quizArray);
+
             QuizUIText quizText = new QuizUIText();
             quizText.titleText = quizArray.data[level].quiz;
             quizText.choiseOneText = quizArray.data[level].choises.choiseOne;
