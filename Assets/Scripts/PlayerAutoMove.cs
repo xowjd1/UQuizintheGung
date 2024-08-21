@@ -1,19 +1,16 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAutoMove : MonoBehaviour
 {
-    public List<Transform> positionList = new List<Transform>();
     public AudioSource audioSource;
+    public QuizPositionController posController;
     
     private float _moveSpeed = 2f;
-    private int _nextIndex = 1;
     private bool _shouldMove = false;
     
     void Start()
     {
-        transform.position = positionList[0].position;
+        transform.position = posController.GetPosition(0);
         
         //Test
         StartMoving();
@@ -23,7 +20,7 @@ public class PlayerAutoMove : MonoBehaviour
     {
         if (_shouldMove)
         {
-            Vector3 targetPosition = positionList[_nextIndex].position;
+            Vector3 targetPosition = posController.GetPosition(posController.NextIndex);
             
             transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
 
@@ -32,7 +29,7 @@ public class PlayerAutoMove : MonoBehaviour
             {
                 _shouldMove = false; // 목표 위치에 도달하면 이동 중지
                 audioSource.Stop();
-                _nextIndex++;
+                posController.IncreaseNextIndex();
             }
         }
     }
