@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,12 +20,16 @@ public class QuizUIText
     public int answerNum;
     public string descriptionText;
 
+
+
     //public bool 
 }
 
 
 public class QuizUIController : MonoBehaviour
 {
+    public Vector3 vector;
+
     public Slider bar;
     public float timeCounter;
     public float timer = 2f;
@@ -85,10 +90,7 @@ public class QuizUIController : MonoBehaviour
 
     private static int GetCurrentQuizIndex()
     {
-        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.stage + GameManager.Instance.level - 2));
-        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.stage ));
-        Debug.Log("GetCurrentQuizIndexv() : " + (GameManager.Instance.level));
-
+   
         //return GameManager.Instance.stage + GameManager.Instance.level - 2;
         return 8 - GameManager.Instance.maxCounter;
     }
@@ -166,9 +168,7 @@ public class QuizUIController : MonoBehaviour
 
                 if (GameManager.Instance.maxCounter == 0)
                 {
-                    panel.gameObject.SetActive(false);
-                    bar.gameObject.SetActive(false);
-                    successFailurePanel.gameObject.SetActive(false);
+                    Ending();
                 }
 
                 
@@ -213,9 +213,7 @@ public class QuizUIController : MonoBehaviour
 
                 if (GameManager.Instance.maxCounter == 0)
                 {
-                    panel.gameObject.SetActive(false);
-                    bar.gameObject.SetActive(false);
-                    successFailurePanel.gameObject.SetActive(false);
+                    Ending();
                 }
 
                 numberText.text = GameManager.Instance.maxCounter.ToString();
@@ -228,7 +226,6 @@ public class QuizUIController : MonoBehaviour
 
             if (GameManager.Instance.level - 1 < maxNextLevel)
             {
-
                 successFailureText.text = "다음 문제로 이동";
                 yield return new WaitForSeconds(successFailurePanelTimer);
                 successFailurePanel.gameObject.SetActive(false);
@@ -241,9 +238,18 @@ public class QuizUIController : MonoBehaviour
                 bar.value = 1;
                 yield return null;
             }
-
-
         }
+    }
+
+    private void Ending()
+    {
+        panel.gameObject.SetActive(false);
+        bar.gameObject.SetActive(false);
+        successFailurePanel.gameObject.SetActive(false);
+
+
+        GameManager.Instance.player.transform.DOMove(vector, 1f,false);
+
     }
 
     private IEnumerator StageMove()
