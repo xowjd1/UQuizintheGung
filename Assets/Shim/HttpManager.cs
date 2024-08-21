@@ -23,6 +23,7 @@ public struct Leaderboard
     public string score;
 }
 
+[Serializable]
 public struct LeaderboardList
 {
     public List<Leaderboard> data;
