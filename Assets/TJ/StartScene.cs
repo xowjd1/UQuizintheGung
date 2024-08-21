@@ -7,7 +7,7 @@ public class StartScene : MonoBehaviour
 {
     public void GameStart()
     {
-        SceneManager.LoadScene("Demo_Geunjeongjeon");
+        SceneManager.LoadScene("Final");
     }
 
     public void GameExit()
