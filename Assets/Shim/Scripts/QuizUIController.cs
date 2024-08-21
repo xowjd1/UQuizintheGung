@@ -123,6 +123,9 @@ public class QuizUIController : MonoBehaviour
         if (answer == 1)
         { 
             successFailureText.text = "다음 레벨로 변경됩니다.";
+
+
+
             NextLevel();
             yield return new WaitForSeconds(successFailurePanelTimer);
         
