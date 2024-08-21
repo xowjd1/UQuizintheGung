@@ -60,6 +60,8 @@ public struct PostInfoArray
 
 }
 
+
+
 public class HttpInfo
 {
     public string url = "";
