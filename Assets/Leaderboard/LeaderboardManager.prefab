@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4493072084717312942}
   - component: {fileID: 4631466015600512559}
   m_Layer: 0
-  m_Name: HttpManager
+  m_Name: LeaderboardManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
