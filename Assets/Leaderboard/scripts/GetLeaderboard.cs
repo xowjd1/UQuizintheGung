@@ -7,6 +7,7 @@ using System.Text;
 using System;
 using System.Globalization;
 using System.Linq;
+using static System.Net.WebRequestMethods;
 //using System.IO;
 //using Newtonsoft.Json;
 //using Newtonsoft.Json.Linq;
@@ -17,7 +18,9 @@ public class GetLeaderboard : MonoBehaviour
     public TMP_Text[] scores;
     public JsonList myData;
 
-    string url = "http://192.168.1.44:8080/test/leaderboard";
+    //string url = "http://192.168.1.44:8080/test/leaderboard";
+    string url = "http://192.168.1.44:8080/api/leaderboard?nickname=fewaf&score=241";
+    //string url = "http://192.168.1.44:8080/api/dbcheck";
 
     void Start()
     {
@@ -28,7 +31,7 @@ public class GetLeaderboard : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     void TestJson()
@@ -102,9 +105,9 @@ public class GetLeaderboard : MonoBehaviour
 
             JsonData[] jsonDataArray = myData.serverDataList.ToArray();
 
-            for(int i = 0; i < jsonDataArray.Length-1; i++)
+            for (int i = 0; i < jsonDataArray.Length - 1; i++)
             {
-                for(int j = i; j < jsonDataArray.Length; j++)
+                for (int j = i; j < jsonDataArray.Length; j++)
                 {
                     if (myData.serverDataList[i].score < myData.serverDataList[j].score)
                     {
@@ -172,29 +175,8 @@ public class GetLeaderboard : MonoBehaviour
 
     }
 
-    void BubbleSort(int[] nums)
-    {
-        int temp;
-        for(int i = 0; i < nums.Length; i++)
-        {
-            for(int j = i; j < nums.Length; j++)
-            {
-                if (nums[i] < nums[j])
-                {
-                    temp = nums[i];
-                    nums[i] = nums[j];
-                    nums[j] = temp;
-                }
-            }
-        }
-
-        for(int i = 0; i < nums.Length; i++)
-        {
-            print(nums[i]);
-        }
-    }
-
 }
+
 
 [System.Serializable]
 public struct JsonData
