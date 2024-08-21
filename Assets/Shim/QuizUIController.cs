@@ -22,6 +22,9 @@ public class QuizUIText
 
 public class QuizUIController : MonoBehaviour
 {
+
+    public GameManager gameManager;
+
     public TextMeshProUGUI stageText;
     public TextMeshProUGUI titleText;
     
@@ -60,6 +63,8 @@ public class QuizUIController : MonoBehaviour
         {
             Debug.Log("정답 입니다.");
             PopUpAnswer(1);
+
+            
         }
         else
         {

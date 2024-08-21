@@ -16,6 +16,14 @@ public class HttpTest : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            Debug.Log(GameManager.Instance.stage);
+            Debug.Log(GameManager.Instance.level);
+        }
+
+
+
         if (Input.GetKeyDown(KeyCode.Alpha8))
         {
             HttpInfo info = new HttpInfo();
@@ -36,7 +44,7 @@ public class HttpTest : MonoBehaviour
 
 
             };
-            StartCoroutine(HttpManager.GetInstance().Get(info));
+            StartCoroutine(HttpManager.Instance.Get(info));
         }
 
 
@@ -82,7 +90,7 @@ public class HttpTest : MonoBehaviour
                 controller.SetQuizData(quizText);
 
             };
-            StartCoroutine(HttpManager.GetInstance().Get(info));
+            StartCoroutine(HttpManager.Instance.Get(info));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
@@ -93,7 +101,7 @@ public class HttpTest : MonoBehaviour
                 File.WriteAllBytes(Application.dataPath + "/image2.jpg", downloadHandler.data);
                 //print(downloadHandler.text);
             };
-            StartCoroutine(HttpManager.GetInstance().Get(info));
+            StartCoroutine(HttpManager.Instance.Get(info));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
@@ -111,7 +119,7 @@ public class HttpTest : MonoBehaviour
                 print(downloadHandler.text);
             };
 
-            StartCoroutine(HttpManager.GetInstance().Post(info));
+            StartCoroutine(HttpManager.Instance.Post(info));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -125,7 +133,7 @@ public class HttpTest : MonoBehaviour
                 //print(downloadHandler.text);
             };
 
-            StartCoroutine(HttpManager.GetInstance().UploadFileByFormData(info));
+            StartCoroutine(HttpManager.Instance.UploadFileByFormData(info));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha5))
@@ -138,7 +146,7 @@ public class HttpTest : MonoBehaviour
                 File.WriteAllBytes(Application.dataPath + "/test2.png", downloadHandler.data);
             };
 
-            StartCoroutine(HttpManager.GetInstance().UploadFileByByte(info));
+            StartCoroutine(HttpManager.Instance.UploadFileByByte(info));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha6))
@@ -162,7 +170,7 @@ public class HttpTest : MonoBehaviour
                 image.sprite = sprite;
             };
 
-            StartCoroutine(HttpManager.GetInstance().DownloadImage(info));
+            StartCoroutine(HttpManager.Instance.DownloadImage(info));
         }
     }
 }

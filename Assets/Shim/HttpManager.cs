@@ -68,9 +68,9 @@ public class HttpInfo
     internal string contextType;
 }
 
-public class HttpManager : MonoBehaviour
+public class HttpManager : Singleton<HttpManager>
 {
-
+    /*
     private static HttpManager instance;
 
     public static HttpManager GetInstance()
@@ -97,6 +97,7 @@ public class HttpManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    */
 
     #region 텍스트 요청
 
