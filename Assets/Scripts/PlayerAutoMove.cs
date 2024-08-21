@@ -3,24 +3,33 @@ using UnityEngine;
 public class PlayerAutoMove : MonoBehaviour
 {
     public AudioSource audioSource;
-    public QuizPositionController posController;
     
     private float _moveSpeed = 2f;
     private bool _shouldMove = false;
+    private int _layerMask;
+
     
     void Start()
     {
-        transform.position = posController.GetPosition(0);
-        
-        //Test
-        StartMoving();
+        // player 게임 시작 위치 설정
+        transform.position = new Vector3(-25f, 1f, 0f);
+        _layerMask = LayerMask.GetMask("portal");
+
+        // TODO 다음 포지션 활성화 테스트 
+        QuizPositionController.Instance.ActiveNextPosition();
     }
 
     void Update()
     {
+        MovePlayer();
+        GetMouseButtonDown();
+    }
+    
+    void MovePlayer()
+    {
         if (_shouldMove)
         {
-            Vector3 targetPosition = posController.GetPosition(posController.NextIndex);
+            Vector3 targetPosition = QuizPositionController.Instance.GetNextPosition();
             
             transform.position = Vector3.Lerp(transform.position, targetPosition, _moveSpeed * Time.deltaTime);
 
@@ -29,7 +38,26 @@ public class PlayerAutoMove : MonoBehaviour
             {
                 _shouldMove = false; // 목표 위치에 도달하면 이동 중지
                 audioSource.Stop();
-                posController.IncreaseNextIndex();
+                QuizPositionController.Instance.SetNextPosition();
+            }
+        }
+    }
+    
+    // 다음 포지션 클릭 시 포지현으로 자동 이동
+    void GetMouseButtonDown()
+    {
+        if (Input.GetMouseButtonDown(0)) 
+        {
+            Debug.Log("마우스 좌클릭 ");
+            
+            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+            RaycastHit hit;
+                
+            // QuizPosition hit
+            if (Physics.Raycast(ray, out hit, 100f, _layerMask))
+            {
+                Debug.Log("Raycast hit : " + hit.transform.name);
+                StartMoving();
             }
         }
     }
