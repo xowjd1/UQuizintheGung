@@ -106,20 +106,16 @@ public class HttpTest : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
+            Debug.Log("GEtKeyDown Alpha3");
             HttpInfo info = new HttpInfo();
-            UserInfo userInfo = new UserInfo();
-            userInfo.name = "¸ÞÅ¸¹ö½º";
-            userInfo.age = 3;
-            userInfo.height = 185f;
-            info.url = "http://mtvs.helloworldlabs.kr:7771/api/json";
-            info.body = JsonUtility.ToJson(userInfo);
-            info.contextType = "application/json";
+            info.url = "192.168.1.44:8080/api/leaderboard?nickname=ã…‡ã…‚&score=20";
 
             info.OnComplete = downloadHandler => {
                 print(downloadHandler.text);
             };
 
-            StartCoroutine(HttpManager.Instance.Post(info));
+            //StartCoroutine(HttpManager.Instance.Get(info));
+            StartCoroutine(SendTest(info.url));
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -158,11 +154,11 @@ public class HttpTest : MonoBehaviour
             info.OnComplete = downloadHandler => {
 
 
-                // ´Ù¿î·Îµå ±­ µ¥ÀÌÅÍ¸¦ Texture2D·Î º¯È¯
+                // ï¿½Ù¿ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Texture2Dï¿½ï¿½ ï¿½ï¿½È¯
                 DownloadHandlerTexture handler = downloadHandler as DownloadHandlerTexture;
                 Texture2D texture = handler.texture;
 
-                // texture ¸¦ ÀÌ¿ëÇØ¼­ Sprite·Î º¯È¯
+                // texture ï¿½ï¿½ ï¿½Ì¿ï¿½ï¿½Ø¼ï¿½ Spriteï¿½ï¿½ ï¿½ï¿½È¯
                 Sprite sprite =
                 Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
 
@@ -172,6 +168,18 @@ public class HttpTest : MonoBehaviour
 
             StartCoroutine(HttpManager.Instance.DownloadImage(info));
         }
+    }
+
+    private IEnumerator SendTest(string url)
+    {
+        using var webRequest = new UnityWebRequest(url, "GET");
+        webRequest.downloadHandler = new DownloadHandlerBuffer();
+        
+        yield return webRequest.SendWebRequest();
+
+        Debug.Log(webRequest.responseCode);
+        Debug.Log(webRequest.downloadHandler.error);
+        Debug.Log(webRequest.downloadHandler.text);
     }
 }
 
