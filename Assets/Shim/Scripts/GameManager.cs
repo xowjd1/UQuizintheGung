@@ -4,6 +4,8 @@ public class GameManager : Singleton<GameManager>
 {
     public GameObject player;
 
+    public bool activeAutoPlayer = true;
+
     public int stage = 1;
     public int level = 1;
     public bool activeRayCast = true;

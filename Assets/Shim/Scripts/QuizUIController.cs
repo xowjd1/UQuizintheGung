@@ -264,6 +264,9 @@ public class QuizUIController : MonoBehaviour
         //todo 리더보드 호출 
         // leaderboard.GetServerData();
 
+        // todo 리더보드 끄면 quiz와 관련된 모든 오브젝트 비활성화 해야함  
+        // GameManager.Instance.activeAutoPlayer = false;
+
     }
 
     private IEnumerator StageMove()
