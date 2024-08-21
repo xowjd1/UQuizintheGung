@@ -247,7 +247,7 @@ public class QuizUIController : MonoBehaviour
         bar.gameObject.SetActive(false);
         successFailurePanel.gameObject.SetActive(false);
 
-
+        //-2.638, 5.815, 48.884
         GameManager.Instance.player.transform.DOMove(vector, 1f,false);
 
     }
