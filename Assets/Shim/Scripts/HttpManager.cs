@@ -110,8 +110,7 @@ public class HttpManager : Singleton<HttpManager>
         webRequest.downloadHandler = new DownloadHandlerBuffer();
         yield return webRequest.SendWebRequest();
         
-        Debug.Log(webRequest.result);
-        Debug.Log(webRequest.downloadHandler.text);
+        DoneRequest(webRequest, info);
     }
 
     
