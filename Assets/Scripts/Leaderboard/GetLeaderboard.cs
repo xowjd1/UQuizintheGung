@@ -54,8 +54,7 @@ public class GetLeaderboard : MonoBehaviour
 
             string jsonData = "{ \"serverDataList\" : " + request.downloadHandler.text + "}";
             print(jsonData);
-            JsonList myData = JsonUtility.FromJson<
-                .>(jsonData);
+            JsonList myData = JsonUtility.FromJson<JsonList>(jsonData);
 
         
             print(myData.serverDataList.Count);
