@@ -108,7 +108,6 @@ public class HttpTest : MonoBehaviour
         {
             Debug.Log("GEtKeyDown Alpha3");
             HttpInfo info = new HttpInfo();
-            info.url = "192.168.1.44:8080/api/leaderboard?nickname=ㅇㅂ&score=20";
 
             info.OnComplete = downloadHandler => {
                 print(downloadHandler.text);

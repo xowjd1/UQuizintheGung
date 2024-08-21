@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class QuizPos : MonoBehaviour
@@ -7,6 +8,8 @@ public class QuizPos : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            StartCoroutine(Wait());
+
             // quizUI 활성화
             QuizPositionController.Instance.GetQuiz();
             
@@ -14,4 +17,10 @@ public class QuizPos : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(3f);
+    }
+
 }
