@@ -5,11 +5,15 @@ using UnityEngine;
 public class QuizPositionController : MonoBehaviour
 {
     public static QuizPositionController Instance;
+    
+    public GameObject quizUIGO;
+    public QuizUIController quizUIController;
+    
     public List<Transform> positionList = new List<Transform>();
     
     private int _nextIndex = 0;
 
-    private void Awake()
+    void Awake()
     {
         Instance = this;
     }
@@ -40,5 +44,19 @@ public class QuizPositionController : MonoBehaviour
     public void SetNextPosition()
     {
         if (_nextIndex < positionList.Count - 1) _nextIndex++;
+    }
+    
+    public void GetQuiz()
+    {
+        GameManager.Instance.activeRayCast = false;
+        quizUIGO.SetActive(true);
+        quizUIController.GetQuiz();
+    }
+    
+    public void QuitQuiz()
+    {
+        GameManager.Instance.activeRayCast = true;
+        quizUIGO.SetActive(false);
+        ActiveNextPosition();
     }
 }

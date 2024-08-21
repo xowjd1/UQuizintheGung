@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerAutoMove : MonoBehaviour
 {
     public AudioSource audioSource;
+    public GameObject quizUIGO;
     
     private float _moveSpeed = 2f;
     private bool _shouldMove = false;
@@ -15,13 +16,14 @@ public class PlayerAutoMove : MonoBehaviour
         transform.position = new Vector3(-25f, 1f, 0f);
         _layerMask = LayerMask.GetMask("portal");
 
-        // TODO 다음 포지션 활성화 (TEST)
+        // QuizUI 비활성화
+        quizUIGO.SetActive(false);
         QuizPositionController.Instance.ActiveNextPosition();
     }
 
     void Update()
     {
-        GetMouseButtonDown();
+        if (GameManager.Instance.activeRayCast) GetMouseButtonDown();
         MovePlayer();
     }
     

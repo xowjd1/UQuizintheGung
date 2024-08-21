@@ -23,44 +23,47 @@ public class QuizUIText
 public class QuizUIController : MonoBehaviour
 {
 
-    [Header("´ÙÀ½ ·¹º§")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public int maxNextLevel = 2;
 
-    [Header("ÄûÁî UI ½ºÅ×ÀÌÁö")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public TextMeshProUGUI stageText;
 
-    [Header("ÄûÁî ³»¿ë")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public TextMeshProUGUI titleText;
 
-    [Header("ÄûÁî UI »çÁö¼±´Ù")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     public TextMeshProUGUI choiseOneText;
     public TextMeshProUGUI choiseTwoText;
     public TextMeshProUGUI choiseThreeText;
     public TextMeshProUGUI choiseFourText;
 
-    [Header("ÄûÁî UI Á¤´ä")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½")]
     public int answerNum;
     
-    [Header("ÄûÁî UI ÇØ¼³")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½Ø¼ï¿½")]
     public TextMeshProUGUI descriptionText;
 
-    [Header("ÄûÁî UI Á¤´äÆË¾÷")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½")]
     public GameObject successFailurePanel;
 
-    [Header("ÄûÁî UI Á¤´äÆË¾÷ ÅØ½ºÆ®")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½ ï¿½Ø½ï¿½Æ®")]
     public TextMeshProUGUI successFailureText;
 
-    [Header("ÄûÁî UI Á¤´äÆË¾÷ ´ë±â½Ã°£")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ï¿½Ë¾ï¿½ ï¿½ï¿½ï¿½Ã°ï¿½")]
     public float successFailurePanelTimer = 2f;
-
-
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
-        }
+        // if (Input.GetKeyDown(KeyCode.L))
+        // {
+        //     QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
+        // }
+    }
+    
+    public void GetQuiz()
+    {
+        QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
     }
 
     private static int GetCurrentQuizIndex()
@@ -69,7 +72,7 @@ public class QuizUIController : MonoBehaviour
     }
 
 
-    // TODO ½ºÅ×ÀÌÁö ³Ñ¹ö·Î ¹®Á¦ °¡Á®¿À±â
+    // TODO ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public void SetQuizData(QuizUIText quizUIText)
     {
         //stageText.text = quizUIText.stageText.ToString();
@@ -79,39 +82,35 @@ public class QuizUIController : MonoBehaviour
         choiseThreeText.text = quizUIText.choiseThreeText.ToString();
         choiseFourText.text = quizUIText.choiseFourText.ToString();
         descriptionText.text = quizUIText.descriptionText.ToString();
-        stageText.text = "½ºÅ×ÀÌÁö " + GameManager.Instance.stage.ToString() + "-" + GameManager.Instance.level.ToString();
+        stageText.text = "ìŠ¤í…Œì´ì§€ " + GameManager.Instance.stage.ToString() + "-" + GameManager.Instance.level.ToString();
 
         answerNum = quizUIText.answerNum;
-
-
     }
 
     public void AnswerFinish(int number)
     {
 
-        Debug.Log("¹øÈ£ : " + number + ", Á¤´ä :" + answerNum);
+        Debug.Log("ìŠ¤í…Œì´ì§€ : " + number + ", ì •ë‹µ :" + answerNum);
 
         if (number == answerNum)
         {
-            Debug.Log("Á¤´ä ÀÔ´Ï´Ù.");
+            Debug.Log("ì •ë‹µì…ë‹ˆë‹¤!!");
             PopUpAnswer(1);
 
         }
         else
         {
-            Debug.Log("Æ²·È½À´Ï´Ù.");
+            Debug.Log("í‹€ë ¸ìŠµë‹ˆë‹¤!!");
             PopUpAnswer(0);
         }
     }
 
-
-
     private void PopUpAnswer(int answer)
     {
         if(answer == 1)
-            StartCoroutine(PopUpAnswerPlay("Á¤´äÀÔ´Ï´Ù!!", answer));
+            StartCoroutine(PopUpAnswerPlay("ì •ë‹µì…ë‹ˆë‹¤!!", answer));
         else
-            StartCoroutine(PopUpAnswerPlay("Æ²·È½À´Ï´Ù!!", answer));
+            StartCoroutine(PopUpAnswerPlay("í‹€ë ¸ìŠµë‹ˆë‹¤!!", answer));
     }
 
     private IEnumerator PopUpAnswerPlay(string text, int answer)
@@ -122,10 +121,7 @@ public class QuizUIController : MonoBehaviour
 
         if (answer == 1)
         { 
-            successFailureText.text = "´ÙÀ½ ·¹º§·Î º¯°æµË´Ï´Ù.";
-
-
-
+            successFailureText.text = "ë‹¤ìŒ ë ˆë²¨ë¡œ ì´ë™";
             NextLevel();
             yield return new WaitForSeconds(successFailurePanelTimer);
         
@@ -136,14 +132,15 @@ public class QuizUIController : MonoBehaviour
 
     private void NextLevel()
     {
-        if (GameManager.Instance.level <= maxNextLevel)
+        if (GameManager.Instance.level < maxNextLevel)
         {
             GameManager.Instance.level++;
             QuizData.Instance.GetQuizData(GetCurrentQuizIndex());
         }
         else
         {
-            Debug.Log("´ÙÀ½ ½ºÅ×ÀÌÁö·Î ÀÌµ¿");
+            Debug.Log("ë‹¤ìŒ ìŠ¤í…Œì´ì§€ë¡œ ì´ë™");
+            QuizPositionController.Instance.QuitQuiz();
         }
     }
 }

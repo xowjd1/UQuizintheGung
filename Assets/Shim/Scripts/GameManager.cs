@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-
 public class GameManager : Singleton<GameManager>
 {
     public int stage = 1;
     public int level = 1;
+    public bool activeRayCast = true;
 
     public void AddLevel(int level)
     { 
