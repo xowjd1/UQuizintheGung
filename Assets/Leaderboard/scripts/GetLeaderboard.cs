@@ -14,17 +14,19 @@ using static System.Net.WebRequestMethods;
 
 public class GetLeaderboard : MonoBehaviour
 {
+    public GameObject leaderBoardGO;
     public TMP_Text[] names;
     public TMP_Text[] scores;
     public JsonList myData;
 
     //string url = "http://192.168.1.44:8080/test/leaderboard";
-    string url = "http://192.168.1.44:8080/api/leaderboard?nickname=fewaf&score=241";
+    string url = "http://192.168.1.44:8080/api/leaderboard?nickname=fewaf&score=5";
     //string url = "http://192.168.1.44:8080/api/dbcheck";
     //string url = "http://192.168.1.44:8080/api/newleaderboard";
 
     void Start()
     {
+        leaderBoardGO.SetActive(false);
         // GetServerData(url);
 
         //TestJson();
@@ -59,6 +61,7 @@ public class GetLeaderboard : MonoBehaviour
 
     public void GetServerData()
     {
+        leaderBoardGO.SetActive(true);
         StartCoroutine(GetServerDataProcess(url));
     }
 
@@ -120,6 +123,11 @@ public class GetLeaderboard : MonoBehaviour
                 }
             }
             myData.serverDataList = jsonDataArray.ToList();
+
+            Debug.Log(myData.ToString());
+            Debug.Log(myData.serverDataList);
+            Debug.Log(myData.serverDataList.Count);
+
 
             for (int i = 0; i < names.Length; i++)
             {

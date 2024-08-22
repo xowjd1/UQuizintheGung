@@ -31,6 +31,8 @@ public class QuizData : Singleton<QuizData>
             quizUI.SetQuizData(quizText);
 
         };
+
+        info.url = "http://192.168.1.44:8080/api/quizlist";
         StartCoroutine(HttpManager.Instance.Get(info));
     }
 
